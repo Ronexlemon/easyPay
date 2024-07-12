@@ -10,6 +10,7 @@ import { celo, celoAlfajores } from "wagmi/chains";
 import Layout from "../components/Layout";
 import "../styles/globals.css";
 
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const connectors = connectorsForWallets(
