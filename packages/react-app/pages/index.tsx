@@ -29,10 +29,10 @@ export default function Home() {
       </div>
       <TabsDemo />
       {isConnected ? (
-        <TableDemo/>
+        <h1 className='mt-5'>{address}</h1>
         
       ) : (
-        <div>No Wallet Connected</div>
+        <div>Kindly Connect Your Wallet</div>
       )}
     </div>
   );

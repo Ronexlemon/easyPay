@@ -61,16 +61,35 @@ export function GenerateCard() {
     }
   }, [result.data, result.error]);
 
+  // const handleApproveAndGenerate = async () => {
+  //   try {
+
+  //     const appr = await approve(amount);
+  //     console.log("approve:", appr);
+
+  //     if (appr) {
+  //       const data = await generateCode(amount);
+  //       setCode(data);
+  //       console.log("The code is generated:", data);
+  //     } else {
+  //       console.log("Approval failed.");
+  //     }
+  //   } catch (err) {
+  //     console.error("Error in handleApproveAndGenerate:", err);
+  //   }
+  // };
   const handleApproveAndGenerate = async () => {
     try {
-
       const appr = await approve(amount);
       console.log("approve:", appr);
-
+  
       if (appr) {
-        const data = await generateCode(amount);
-        setCode(data);
-        console.log("The code is generated:", data);
+        // Delay for 5 seconds before calling generateCode
+        setTimeout(async () => {
+          const data = await generateCode(amount);
+          setCode(data);
+          console.log("The code is generated:", data);
+        }, 5000); // 5000 milliseconds = 5 seconds
       } else {
         console.log("Approval failed.");
       }
@@ -78,6 +97,7 @@ export function GenerateCard() {
       console.error("Error in handleApproveAndGenerate:", err);
     }
   };
+  
 
   const copyToClipboard = () => {
     const textToCopy = `https://easypay/32673656476375373756357357357357`;
@@ -105,7 +125,7 @@ export function GenerateCard() {
             </div>
             <div className="flex flex-col items-center gap-2">
               {codenew && (
-                <Button onClick={() => setOpenDrawer(true)}>Get Code</Button>
+                <Button className="bg-blue-300" variant="link" onClick={() => setOpenDrawer(true)}>Get Code</Button>
               )}
             </div>
           </div>

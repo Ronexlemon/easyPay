@@ -13,7 +13,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import { Copy } from "lucide-react";
+import { Copy,Share,Share2Icon } from "lucide-react";
+
 import { Toast } from "./toast";
 
 
@@ -29,6 +30,18 @@ interface prop{
 export function QRcode(props:prop) {
   const [toast, setToast] = React.useState<boolean>(false)
   const [opendrawer,setOpenDrawer]=  React.useState<boolean>(true);
+  const shareToGoogleMail = () => {
+    const subject = encodeURIComponent("Check out this QR Code");
+    const body = encodeURIComponent(`Here is the QR Code link: ${props.link}`);
+    const mailToLink = `mailto:?subject=${subject}&body=${body}`;
+    window.open(mailToLink, '_blank');
+  };
+
+  const shareToWhatsApp = () => {
+    const text = encodeURIComponent(`Check out this QR Code: ${props.link}`);
+    const whatsappLink = `https://api.whatsapp.com/send?text=${text}`;
+    window.open(whatsappLink, '_blank');
+  };
   const copyToClipboard = () => {
     setToast(true)
     const textToCopy = props.link;
@@ -61,8 +74,12 @@ export function QRcode(props:prop) {
          
          
           
-          <DrawerFooter>
+          <DrawerFooter >
+            <div className="flex justify-around items-center w-full mt-5">
             <Copy onClick={copyToClipboard}/>
+            <Share2Icon onClick={shareToGoogleMail} />
+            </div>
+            
             
           </DrawerFooter>
         </div>
