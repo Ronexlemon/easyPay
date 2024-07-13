@@ -26,7 +26,7 @@ export function Claim() {
   };
 
   return (
-    <Card className="w-[400px] bg-black text-gray-100">
+    <Card className="w-[400px] bg-black text-gray-100 rounded-2xl">
       <CardHeader>
         <CardTitle>Claim Your Code</CardTitle>
       </CardHeader>

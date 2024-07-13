@@ -108,7 +108,7 @@ export function GenerateCard() {
 
   return (
     <div>
-      <Card className="w-[400px] bg-gray-300">
+      <Card className="w-[400px] bg-gray-300 rounded-2xl">
         <CardHeader>
           <CardTitle>EASYPAY</CardTitle>
           <CardDescription>Deploy your new project in one-click.</CardDescription>

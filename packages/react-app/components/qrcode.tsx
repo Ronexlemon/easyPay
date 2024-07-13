@@ -31,8 +31,8 @@ export function QRcode(props:prop) {
   const [toast, setToast] = React.useState<boolean>(false)
   const [opendrawer,setOpenDrawer]=  React.useState<boolean>(true);
   const shareToGoogleMail = () => {
-    const subject = encodeURIComponent("Check out this QR Code");
-    const body = encodeURIComponent(`Here is the QR Code link: ${props.link}`);
+    const subject = encodeURIComponent("CLAIM YOUR EASYPAY GIFTLINK");
+    const body = encodeURIComponent(`ACCESS VIA THE LINK: ${props.link}`);
     const mailToLink = `mailto:?subject=${subject}&body=${body}`;
     window.open(mailToLink, '_blank');
   };
