@@ -30,7 +30,7 @@ const useContract =()=>{
 
     }
 
-    const claimCode = async(code:string)=>{
+    const claimCode = async(code:string | string[])=>{
         const data = await easycontract({
             address: EASYPAYCONTRACT,
             functionName: "claim",

@@ -24,13 +24,16 @@ export function TabsDemo() {
   const router = useRouter();
   return (
     <Tabs defaultValue="generate" className="w-[400px]">
-      <TabsList className="grid w-full grid-cols-2">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="generate">Generate</TabsTrigger>
-        <Button onClick={()=>router.push("/claim")}>Claim</Button>
+        <TabsTrigger value="claim">Claim</TabsTrigger>
         <TabsTrigger value="stream">Stream</TabsTrigger>
       </TabsList>
       <TabsContent className="w-full" value="generate">
        <GenerateCard/>
+      </TabsContent>
+      <TabsContent className="w-full" value="claim">
+       <Claim/>
       </TabsContent>
       <TabsContent value="stream">
         <Card>

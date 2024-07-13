@@ -117,12 +117,12 @@ export function GenerateCard() {
           >
             Generate
           </Button>
-          <Button
+          {/* <Button
             onClick={handleClaim}
             className="w-full bg-green-300 rounded-2xl"
           >
           Claim
-          </Button>
+          </Button> */}
         </CardFooter>
       </Card>
       <QRcode

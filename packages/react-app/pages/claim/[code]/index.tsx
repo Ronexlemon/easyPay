@@ -1,45 +1,55 @@
-import { useEffect, useState } from 'react';
+"use client"
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import useContract from '@/contracts/useContracts';
 import ErrorCard from '@/components/errorClaimCode';
+import SuccesCard from '@/components/successCard';
+import { Button } from '@/components/ui/button';
+import WelcomeCard from '@/components/welcomeCard';
 
 const CodePage: NextPage = () => {
-    const [iserror,setIsError] = useState<boolean>(false)
+  const [isError, setIsError] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [loading, setIsLoading] = useState<boolean>(false);
+  const [welcome, setIsWelcome] = useState<boolean>(true);
   const { claimCode } = useContract();
   const router = useRouter();
   const { code } = router.query;
 
-  useEffect(() => {
-    const executeClaim = async () => {
-      if (!code) {
-        // Uncomment the following line if you want to redirect to the homepage when there's no code
-        // router.push('/');
-        console.log("No code provided");
-      } else {
-        try {
-          await claimCode(code as string);
-        } catch (error) {
-            setIsError(true)
-          console.error('Error claiming code:', error);
-        }
-      }
-    };
-
-    if (code) {
-      executeClaim();
+  const hasExecuted = useRef<boolean>(false);
+  const handleClaim = async () => {
+    if(!code){
+        console.log("no code")
+        return;
     }
-  }, [code, claimCode]);
+    try {
+        setIsLoading(true);
 
-  if (!code) {
-    return null; // or a loading spinner if desired
-  }
+      const tx = await claimCode(code as string);
+      if(tx.length !=0){
+        setIsWelcome(false)
+        setIsLoading(false);
+        setIsSuccess(true)
+        
+      }
+    } catch (err) {
+        setIsWelcome(false)
+        console.log(err);
+        setIsLoading(false)
+        setIsError(true)
+      
+    }
+  };
+
 
   return (
-    <div className='flex flex-col justify-center items-center'>
-      <h1>Dynamic Route Page</h1>
-      <p>The code is: {code}</p>
-      {iserror && <ErrorCard/>}
+    <div className='flex flex-col justify-center items-center gap-8'>
+      {isError && <ErrorCard />}
+      {isSuccess && <SuccesCard />}
+      {loading && <h1>Loading ...</h1>}
+      {welcome && <WelcomeCard/>}
+      <Button className='w-1/4 bg-green-500 rounded-full'  onClick={handleClaim}>Claim</Button>
     </div>
   );
 };
