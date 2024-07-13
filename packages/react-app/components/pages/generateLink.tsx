@@ -133,6 +133,7 @@ export function GenerateCard() {
         <CardFooter className="flex flex-col">
           <Button
             onClick={handleApproveAndGenerate}
+            variant="default"
             className="w-full bg-green-300 rounded-2xl"
           >
             Generate

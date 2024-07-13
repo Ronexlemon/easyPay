@@ -65,7 +65,7 @@ export function QRcode(props:prop) {
             <Button onClick={()=>props.setState(false)}>X</Button>
             <div className="flex justify-center items-center">
                 
-                <QRCode  value={props.link} className="w-3/4 h-1/4  " color="white" 
+                <QRCode  value={props.link} className="w-3/4 md:w-1/4 h-1/4  " color="white" 
                 size={256}
                 viewBox={`0 0 256 256`}/>
 
