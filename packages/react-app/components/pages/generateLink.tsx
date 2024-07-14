@@ -126,7 +126,7 @@ export function GenerateCard() {
             </div>
             <div className="flex flex-col items-center gap-2">
               {codenew && (
-                <Button className="bg-blue-300 text-sm h-10" variant="link" onClick={() => setOpenDrawer(true)}>Get Code</Button>
+                <Button className="bg-blue-300 text-sm h-8" variant="link" onClick={() => setOpenDrawer(true)}>Get Code</Button>
                 
               )}
             </div>

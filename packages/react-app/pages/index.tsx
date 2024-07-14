@@ -29,7 +29,7 @@ export default function Home() {
       </div>
       <TabsDemo />
       {isConnected ? (
-        <h1 className='mt-5'>{address}</h1>
+        <h1 className='mt-5 text-xs'>{address}</h1>
         
       ) : (
         <div>Kindly Connect Your Wallet</div>
