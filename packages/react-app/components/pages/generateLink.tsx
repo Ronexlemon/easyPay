@@ -147,7 +147,7 @@ export function GenerateCard() {
         </CardFooter>
       </Card>
       <QRcode
-        link={`https://easypay/${codenew}`}
+        link={`https://easy-pay-react-app.vercel.app/claim/${codenew}`}
         state={opendrawer}
         setState={setOpenDrawer}
       />
