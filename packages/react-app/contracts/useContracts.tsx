@@ -6,12 +6,14 @@ import { EASYPAYCONTRACT } from "@/constants/constant";
 import EASYABI from "../abi/EASYPAY.json";
 import CUSDABI from "../abi/IERC20.json";
 import { CUSDCONTRACT } from "@/constants/constant";
+import { Send } from "lucide-react";
 
 
 const useContract =()=>{
 
     const {writeContractAsync: easycontract} = useWriteContract();
     const {writeContractAsync: cusdcontract} = useWriteContract();
+    const {data:readcusd} = useReadContract({});
     const {data} = useWaitForTransactionReceipt();
 
     const generateCode = async(amount:bigint |undefined)=>{
@@ -57,9 +59,20 @@ const approve = async(amount:bigint | undefined)=>{
     
 }
 
+//get cusd balance
+const sendCusd = async(address:string,amount:bigint)=>{
+    const val = await cusdcontract({
+        address: CUSDCONTRACT,
+        functionName: "transfer",
+        args: [address,amount],
+        abi: CUSDABI.abi,
+        })
+        return val;
+    }
+
 return{
-    approve,claimCode,generateCode
+    approve,claimCode,generateCode,sendCusd
     }
 
 }
-export default useContract
+export default useContract;

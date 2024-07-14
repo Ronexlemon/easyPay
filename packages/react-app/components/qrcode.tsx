@@ -16,7 +16,7 @@ import {
 import { Copy,Share,Share2Icon } from "lucide-react";
 
 import { Toast } from "./toast";
-
+import { AlertMessage } from "./alert";
 
 
 
@@ -30,6 +30,7 @@ interface prop{
 export function QRcode(props:prop) {
   const [toast, setToast] = React.useState<boolean>(false)
   const [opendrawer,setOpenDrawer]=  React.useState<boolean>(true);
+  const [alert,setAlert] = React.useState<boolean>(false);
   const shareToGoogleMail = () => {
     const subject = encodeURIComponent("CLAIM YOUR EASYPAY GIFTLINK");
     const body = encodeURIComponent(`ACCESS VIA THE LINK: ${props.link}`);
@@ -43,10 +44,13 @@ export function QRcode(props:prop) {
     window.open(whatsappLink, '_blank');
   };
   const copyToClipboard = () => {
-    setToast(true)
+    setAlert(true)
     const textToCopy = props.link;
     navigator.clipboard.writeText(textToCopy);
-    setToast(false)
+    
+    setTimeout(() => {
+      setAlert(false);
+    }, 5000);
      // Reset copied state after 2 seconds
   };
   
@@ -56,7 +60,7 @@ export function QRcode(props:prop) {
   return (
     <Drawer   open={props.state} onOpenChange={props.setState}>
        
-        {toast && <Toast message="Copy successful"  />}
+      
 
        
       
@@ -82,6 +86,11 @@ export function QRcode(props:prop) {
             
             
           </DrawerFooter>
+          <div className="flex justify-center items-center w-1/4 ">
+    {alert && <AlertMessage message="Copied"  />}
+
+
+    </div>
         </div>
       </DrawerContent>
     </Drawer>

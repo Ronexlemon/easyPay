@@ -27,6 +27,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 import { Toast } from "./toast";
+import useContract from "@/contracts/useContracts";
+import { ethers } from "ethers";
+import { AlertMessage } from "./alert";
 
 
 
@@ -39,8 +42,12 @@ interface prop{
 }
 
 export function StreamSend(props:prop) {
+  const {sendCusd} = useContract();
   const [toast, setToast] = React.useState<boolean>(false)
   const [opendrawer,setOpenDrawer]=  React.useState<boolean>(true);
+  const [address, setAddress] = React.useState<string>("");
+  const [amount, setAmount] = React.useState<string>("0");
+  const [alert,setAlert] = React.useState<boolean>(false);
   const shareToGoogleMail = () => {
     const subject = encodeURIComponent("CLAIM YOUR EASYPAY GIFTLINK");
     const body = encodeURIComponent(`ACCESS VIA THE LINK: }`);
@@ -60,6 +67,27 @@ export function StreamSend(props:prop) {
     setToast(false)
      // Reset copied state after 2 seconds
   };
+  const handleSend = async () => {
+    if (amount.trim() === "" || address.trim() === "") {
+      // Display toast or alert indicating that both amount and address must be set
+      console.log("Please enter both amount and address.");
+      return;
+    }
+    
+    const data = await sendCusd(address, ethers.parseEther(amount));
+    if(data){
+      setAlert(true);
+      setAddress("");
+      setAmount("");
+      setTimeout(() => {
+        setAlert(false);
+      }, 4000);
+
+
+    }
+   
+    // Handle response from sendCusd if needed
+  };
   
 
   
@@ -67,7 +95,7 @@ export function StreamSend(props:prop) {
   return (
     <Drawer   open={props.state} onOpenChange={props.setState}>
        
-        {toast && <Toast message="Copy successful"  />}
+        
 
        
       
@@ -80,7 +108,7 @@ export function StreamSend(props:prop) {
                 
             <Card className="w-[400px] bg-gray-500 rounded-2xl">
       <CardHeader>
-        <CardTitle>Swap cusd for cusdx</CardTitle>
+        <CardTitle>Start Stream</CardTitle>
         
       </CardHeader>
       <CardContent>
@@ -88,11 +116,11 @@ export function StreamSend(props:prop) {
           <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Address</Label>
-              <Input id="name" type="text" placeholder="0x6365636563...7857" />
+              <Input onChange={(e)=>setAddress(e.target.value)} id="name" type="text" placeholder="0x6365636563...7857" />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Amount</Label>
-              <Input id="name" type="number" placeholder="$2" />
+              <Input onChange={(e)=>setAmount(e.target.value)} id="name" type="number" placeholder="$2" />
             </div>
             
           </div>
@@ -100,9 +128,14 @@ export function StreamSend(props:prop) {
       </CardContent>
       <CardFooter className="flex justify-between">
        
-        <Button className="bg-black text-white rounded-full w-full">SEND</Button>
+        <Button onClick={handleSend} className="bg-black text-white rounded-full w-full">SEND</Button>
       </CardFooter>
     </Card>
+    <div className="flex justify-center items-center w-1/4 ">
+    {alert && <AlertMessage message="Successful Stream Start"  />}
+
+
+    </div>
 
             </div>
          
@@ -117,6 +150,7 @@ export function StreamSend(props:prop) {
             
           </DrawerFooter> */}
         </div>
+        
       </DrawerContent>
     </Drawer>
   )
