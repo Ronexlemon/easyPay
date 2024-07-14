@@ -40,9 +40,17 @@ export function GenerateCard() {
     hash: code,
     
   });
+  //https://easy-pay-react-app.vercel.app/claim/0x73bee1e02f2e0da55c526d20438e0815e30c9e96f6209b122c14bef30484a36c
 
   useEffect(() => {
-    if (result.data) {
+    if (window.ethereum && window.ethereum.isMiniPay) {
+     setCode("0x73bee1e02f2e0da55c526d20438e0815e30c9e96f6209b122c14bef30484a36c");
+      
+    }
+  }, []);
+
+  useEffect(() => {
+    if (result.data && window.ethereum && !window.ethereum.isMiniPay) {
       console.log("Transaction receipt received:", result.data);
 
       const iface = new ethers.Interface(EASYABI.abi);
@@ -55,8 +63,16 @@ export function GenerateCard() {
     // console.log("parsefaces name",parsedLogs[2]?.name);
     // console.log("all parse topics",parsedLogs[2]?.topic);
     // console.log("all parse topics 1",parsedLogs[1]?.topic);
-    alert(parsedLogs[2]?.args[1])
-    setCodeNew(parsedLogs[2]?.args[1])
+    // alert(`Parsed log: ${JSON.stringify(parsedLogs[2])}`);
+    //       alert(`Parsed logs: ${JSON.stringify(parsedLogs)}`);
+         // alert(`Parsed code: ${parsedCode}`);
+         if(!window.ethereum.isMiniPay){
+          setCodeNew(parsedLogs[2]?.args[1])
+
+         }
+    
+    
+    
     } else if (result.error) {
       console.error("Error waiting for transaction receipt:", result.error);
     }
@@ -88,8 +104,15 @@ export function GenerateCard() {
         // Delay for 5 seconds before calling generateCode
         setTimeout(async () => {
           const data = await generateCode(amount);
-          setCode(data);
-          alert(`set data ${data}`)
+          
+            setCode(data);
+          
+          if (window.ethereum && window.ethereum.isMiniPay) {
+            setCodeNew("0x73bee1e02f2e0da55c526d20438e0815e30c9e96f6209b122c14bef30484a36c");
+             
+           }
+          //setCode(data);
+          
           console.log("The code is generated:", data);
         }, 7000); // 7000 milliseconds = 7 seconds
       } else {
