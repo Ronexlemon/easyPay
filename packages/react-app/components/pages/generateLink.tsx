@@ -55,6 +55,7 @@ export function GenerateCard() {
     // console.log("parsefaces name",parsedLogs[2]?.name);
     // console.log("all parse topics",parsedLogs[2]?.topic);
     // console.log("all parse topics 1",parsedLogs[1]?.topic);
+    alert(parsedLogs[2]?.args[1])
     setCodeNew(parsedLogs[2]?.args[1])
     } else if (result.error) {
       console.error("Error waiting for transaction receipt:", result.error);
@@ -89,7 +90,7 @@ export function GenerateCard() {
           const data = await generateCode(amount);
           setCode(data);
           console.log("The code is generated:", data);
-        }, 5000); // 5000 milliseconds = 5 seconds
+        }, 7000); // 7000 milliseconds = 7 seconds
       } else {
         console.log("Approval failed.");
       }
@@ -108,10 +109,10 @@ export function GenerateCard() {
 
   return (
     <div>
-      <Card className="w-[400px] bg-gray-300 rounded-2xl">
+      <Card className="w-[420px] bg-gray-300 rounded-2xl">
         <CardHeader>
           <CardTitle>EASYPAY</CardTitle>
-          <CardDescription>Deploy your new project in one-click.</CardDescription>
+          <CardDescription>Get A link By Just a click</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid w-full items-center gap-4">
@@ -125,7 +126,8 @@ export function GenerateCard() {
             </div>
             <div className="flex flex-col items-center gap-2">
               {codenew && (
-                <Button className="bg-blue-300" variant="link" onClick={() => setOpenDrawer(true)}>Get Code</Button>
+                <Button className="bg-blue-300 text-sm h-10" variant="link" onClick={() => setOpenDrawer(true)}>Get Code</Button>
+                
               )}
             </div>
           </div>
