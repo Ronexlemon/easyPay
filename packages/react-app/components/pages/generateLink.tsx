@@ -60,7 +60,7 @@ export function GenerateCard() {
     } else if (result.error) {
       console.error("Error waiting for transaction receipt:", result.error);
     }
-  }, [result.data, result.error]);
+  }, [result.data, result.error,codenew]);
 
   // const handleApproveAndGenerate = async () => {
   //   try {
@@ -89,6 +89,7 @@ export function GenerateCard() {
         setTimeout(async () => {
           const data = await generateCode(amount);
           setCode(data);
+          alert(`set data ${data}`)
           console.log("The code is generated:", data);
         }, 7000); // 7000 milliseconds = 7 seconds
       } else {
